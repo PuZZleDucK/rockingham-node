@@ -1,4 +1,5 @@
 var tools = require("./tools.js");
+var util = require("util");
 var async = require('async');
 
 console.log("NodeJS tests");
@@ -24,5 +25,8 @@ setTimeout(function() {
 
 }, 3000);
 
+// text = tools.get_text_from_path("http://www.puzzleduck.org", "/");
+// check text contains "Welcome to PuZZleDucK.org"
+// console.log("Path to text: " + util.inspect(text, {showHidden: false, depth: null}) + "...");
 
 console.log("NodeJS tests complete");

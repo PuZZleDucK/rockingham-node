@@ -1,6 +1,41 @@
+var http = require('http');
+var request = require('request')
 var sqlite3 = require("sqlite3");
 
 module.exports = {
+
+  get_text_from_path: function(host, path) {
+    console.log("Getting: " + host + path);
+    var ret;
+    // var options = {
+    //   host: host,
+    //   // port: 80,
+    //   path: path
+    // };
+    opts = {
+      method: "GET",
+      url: host + path
+      // port: "80"
+    };
+    ret = request(opts, function (error, response, body) {
+      // console.log("   request got: " + body)
+      ret = body;
+      return body;
+    });
+    // http.get(options, function(resp){
+    //   ret = resp.on('data', function(chunk){
+    //     //do something with chunk
+    //     console.log("   request got: " + chunk)
+    //     ret = chunk;
+    //     return chunk
+    //   });
+    // }).on("error", function(e){
+    //   console.log("Got error: " + e.message);
+    // });
+
+    return ret.getHeader;
+  },
+
 
   write_record_with_values: function(values){
     console.log("   Write: " + values[0]);
