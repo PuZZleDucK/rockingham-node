@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://gitlab.com/puzzleduck/rockingham-node/issues"
   },
-  "homepage": "https://gitlab.com/puzzleduck/rockingham-node#README"
+  "homepage": "https://gitlab.com/puzzleduck/rockingham-node#README",
+  "dependencies": {
+    "sqlite3": "^3.1.8"
+  }
 }
