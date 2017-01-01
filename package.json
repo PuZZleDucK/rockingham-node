@@ -1,0 +1,26 @@
+{
+  "name": "rockingham-node",
+  "version": "1.0.0",
+  "description": "Planning alert scraper for RockHam in NodeJS",
+  "main": "scraper.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/puzzleduck/rockingham-node.git"
+  },
+  "keywords": [
+    "Planning",
+    "alret",
+    "scraper",
+    "RockHam",
+    "NodeJS"
+  ],
+  "author": "PuZZleDucK@gmail.com",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://gitlab.com/puzzleduck/rockingham-node/issues"
+  },
+  "homepage": "https://gitlab.com/puzzleduck/rockingham-node#README"
+}
