@@ -88,15 +88,15 @@ module.exports = {
 
   checkRecord: function(referenceNumber){
     var db = dblite('data.sqlite');
-    res = "defaulse";
+    // res = "defaulse";
     db.query('SELECT * FROM data WHERE council_reference = :r', {r: referenceNumber}, function (err, rows) {
       console.log("R:"+rows.length); // "awesome""
       if(rows.length > 0){
         res = true;
-        return true;
+        // return true;
       }else{
         res = false;
-        return false;
+        // return false;
       }
     });
 

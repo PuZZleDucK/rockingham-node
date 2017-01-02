@@ -1,12 +1,11 @@
 var sqlite3 = require("sqlite3");
-var dblite = require("dblite");
 var request = require('request')
 var tools = require("./tools");
 
 console.log("NodeJS scraper");
 // Fields unavaliable: date_received, on_notice_from,
-var db = new sqlite3.Database("data.sqlite");
-db.run("CREATE TABLE IF NOT EXISTS data (council_reference TEXT, address TEXT, description TEXT, info_url TEXT, comment_url TEXT, date_scraped DATE, on_notice_to DATE)");
+var db3 = new sqlite3.Database("data.sqlite");
+db3.run("CREATE TABLE IF NOT EXISTS data (council_reference TEXT, address TEXT, description TEXT, info_url TEXT, comment_url TEXT, date_scraped DATE, on_notice_to DATE)");
 opts = {
   method: "GET",
   url: "http://www.rockingham.wa.gov.au/Services/Town-planning-services/Town-planning-advertising#Submissions"
@@ -15,7 +14,6 @@ console.log(" :> start request ");
 request(opts, function (error, response, body) {
   body.split('<h2>').forEach(function(segment) {
     console.log("   :> start segment ");
-    var db = dblite('data.sqlite');
     var class_id = tools.find_between(segment.replace("\n"," "), '<a id="', '"')
     if(class_id.match(/ctl00_ctl00_sbSearchBox_btnImageButton|Submissions/)) {
       // console.log("   :: skipping filler: " + class_id)
@@ -51,25 +49,28 @@ request(opts, function (error, response, body) {
       var on_notice_to = Date.parse(tools.find_between(segment, 'in writing to reach the Chief Executive Officer by no later than', '.').replace(/&nbsp;|<strong>|<\/strong>/g," ").trim());
       // console.log("   on_notice_to: " + on_notice_to);
 
-      db.query('SELECT * FROM data WHERE council_reference = :r', {r: council_reference}, function (err, rows) {
-        console.log("         :> query start:"+rows.length); // "awesome""
-        if(rows.length > 0){
+      var qry = "SELECT * FROM data WHERE council_reference LIKE '" + council_reference + "'";
+      db3.get(qry, function (err, rows) {
+        console.log("         :> query start:"+qry); // "awesome""
+        if(rows){
           console.log("Skipping dupe: " + council_reference);
         }else{
           console.log("Storing: " + council_reference);
           tools.write_record_with_values([council_reference, address, description, info_url, comment_url, date_scraped, on_notice_to]);
         }
         console.log("         <: end query ");
+        // return;
       });
 
       console.log("       <: end segment type");
-      return;
+      // return;
 
     }
     console.log("   <: end segment ");
-    return;
+    // return;
   });
   console.log(" <: end request ");
-  return;
+  // return;
 
 });
+// return;
