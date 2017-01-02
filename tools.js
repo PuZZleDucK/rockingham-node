@@ -1,7 +1,6 @@
 var http = require('http');
 var request = require('request')
 var sqlite3 = require("sqlite3");
-var dblite = require("dblite");
 var util = require("util");
 
 module.exports = {

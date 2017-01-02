@@ -24,7 +24,9 @@
   },
   "homepage": "https://gitlab.com/puzzleduck/rockingham-node#README",
   "dependencies": {
+    "http": "0.0.0",
     "request": "^2.79.0",
-    "sqlite3": "^3.1.8"
+    "sqlite3": "^3.1.8",
+    "util": "^0.10.3"
   }
 }
