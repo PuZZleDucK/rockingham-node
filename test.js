@@ -1,5 +1,6 @@
 var tools = require("./tools.js");
 var util = require("util");
+var assert = require("assert");
 var async = require('async');
 
 console.log("NodeJS tests");
@@ -28,5 +29,12 @@ setTimeout(function() {
 // text = tools.get_text_from_path("http://www.puzzleduck.org", "/");
 // check text contains "Welcome to PuZZleDucK.org"
 // console.log("Path to text: " + util.inspect(text, {showHidden: false, depth: null}) + "...");
+
+console.log("Simple find_between tests");
+t = tools.find_between("test", 't', 't');
+assert(t == "es", "simple find");
+assert(tools.find_between("t(es)t", '(', ')') == "es", "bracket find");
+assert(tools.find_between('t"es"t', '"', '"') == "es", "d-quote find");
+assert(tools.find_between("t'es't", "'", "'") == "es", "quote find");
 
 console.log("NodeJS tests complete");
