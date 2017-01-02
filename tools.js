@@ -1,6 +1,8 @@
 var http = require('http');
 var request = require('request')
 var sqlite3 = require("sqlite3");
+var dblite = require("dblite");
+var util = require("util");
 
 module.exports = {
 
@@ -45,6 +47,65 @@ module.exports = {
     // });
 
     return ret.getHeader;
+  },
+
+  // check_have_record: function(reference){
+  //   console.log("   Check: " + reference);
+    // var db = new sqlite3.Database("data.sqlite");
+    // var db = dblite('data.sqlite');
+    // var ret;
+    // db.serialize(function() { //
+      // db.get("SELECT * FROM data WHERE data.council_reference = '" + reference + "'", function(err, row) {
+      //   // console.log("   Row: " + row.council_reference);
+      //   callback(err, row);
+      //   // ret = true;
+      //   // return true;
+      // });
+    // });
+    // db.query(
+    //   'SELECT * FROM data',
+    //   // retrieved as
+    //   ['council_reference', 'description'],
+    //   // once retrieved
+    //   function (rows) {
+    //     rows.forEach(eachRow);
+    //   }
+    // );
+    // function eachRow(row, i, rows) {
+    //   console.log(row.council_reference + ": " + row.description);
+    //   if ((i + 1) === rows.length) {
+    //     db.close();
+    //   }
+    // }
+
+    // console.log("  ref match: " + util.inspect(ret));
+    // return ret;
+    // record = db.run("SELECT * from 'data' WHERE council_reference = '" + reference + "'");
+    // db.close();
+    // console.log("   Record found:" + record + " - " + util.inspect(record));
+    // return true;
+  // },
+
+  checkRecord: function(referenceNumber){
+    var db = dblite('data.sqlite');
+    res = "defaulse";
+    db.query('SELECT * FROM data WHERE council_reference = :r', {r: referenceNumber}, function (err, rows) {
+      console.log("R:"+rows.length); // "awesome""
+      if(rows.length > 0){
+        res = true;
+        return true;
+      }else{
+        res = false;
+        return false;
+      }
+    });
+
+    setTimeout(function() {
+      console.log("Rr:"+res); // "awesome""
+      db.close();
+      return res;
+    }, 3000);
+    return res;
   },
 
 

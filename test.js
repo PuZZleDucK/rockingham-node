@@ -11,17 +11,29 @@ tools.write_record_with_values(["council_reference2", "address2", "description2"
 console.log('  test record written');
 
 setTimeout(function() {
-    console.log('...wait');
+  console.log('...wait');
 
-    console.log("Test ROW delete");
-    tools.delete_record_with_reference("council_reference2");
-    console.log('  test record Deleted');
+  console.log("Test ROW delete");
+  tools.delete_record_with_reference("council_reference2");
+  console.log('  test record Deleted');
+
+  setTimeout(function() {
+    console.log('...wait2.1');
+    // console.log('Test ref search');
+    // // assert(tools.check_have_record("council_reference"), "find ref");
+    // var ret1;
+    // ret1 = tools.checkRecord("council_reference");
+    // console.log('   final-ret1: ' + util.inspect(ret1));
+
+    // assert(!tools.check_have_record("council_reference2"), "find non ref");
 
     setTimeout(function() {
       console.log('...wait2');
       console.log("Test DB delete");
       tools.delete_data_table();
       console.log('  test db Deleted');
+
+    }, 3000);
   }, 6000);
 
 }, 3000);
