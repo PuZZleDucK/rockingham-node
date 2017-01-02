@@ -4,6 +4,17 @@ var sqlite3 = require("sqlite3");
 
 module.exports = {
 
+  find_between: function(text, start_marker, end_marker) {
+    // console.log(" find in: " + text);
+    var start = text.indexOf(start_marker) + start_marker.length;
+    // console.log("   start: " + start);
+    var end = text.indexOf(end_marker, start);
+    // console.log("     end: " + text.indexOf(end_marker, start));
+    var find = text.slice(start, end);
+    // console.log("    find: " + find);
+    return find;
+  },
+
   get_text_from_path: function(host, path) {
     console.log("Getting: " + host + path);
     var ret;
