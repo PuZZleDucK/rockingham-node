@@ -6,8 +6,8 @@ var async = require('async');
 console.log("NodeJS tests");
 
 console.log("Test DB write");
-tools.write_record_with_values(["council_reference", "address", "description", "info_url", "comment_url", "11-10-1979", "11-10-1979", "11-10-1979", "11-10-1979"]);
-tools.write_record_with_values(["council_reference2", "address2", "description2", "info_url2", "comment_url2", , "11-10-1979", "11-10-1979", "11-10-1979", "11-10-1979"]);
+tools.write_record_with_values(["council_reference", "address", "description", "info_url", "comment_url", "11-10-1979", "11-10-1979"]);
+tools.write_record_with_values(["council_reference2", "address2", "description2", "info_url2", "comment_url2", "11-10-1979", "11-10-1979"]);
 console.log('  test record written');
 
 setTimeout(function() {

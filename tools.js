@@ -52,9 +52,9 @@ module.exports = {
     console.log("   Write: " + values[0]);
     var db = new sqlite3.Database("data.sqlite");
     db.serialize(function() {
-      db.run("CREATE TABLE IF NOT EXISTS data (council_reference TEXT, address TEXT, description TEXT, info_url TEXT, comment_url TEXT, date_scraped DATE, date_received DATE, on_notice_from DATE, on_notice_to DATE)");
-      var statement = db.prepare("INSERT INTO data(council_reference, address, description, info_url, comment_url, date_scraped, date_received, on_notice_from, on_notice_to) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-      statement.run(values[0], values[1], values[2], values[3], values[4], values[5], values[6], values[7], values[8]);
+      db.run("CREATE TABLE IF NOT EXISTS data (council_reference TEXT, address TEXT, description TEXT, info_url TEXT, comment_url TEXT, date_scraped DATE, on_notice_to DATE)");
+      var statement = db.prepare("INSERT INTO data(council_reference, address, description, info_url, comment_url, date_scraped, on_notice_to) VALUES (?, ?, ?, ?, ?, ?, ?)");
+      statement.run(values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
       statement.finalize();
     });
     console.log("   Write complete");

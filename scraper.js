@@ -2,12 +2,7 @@ var request = require('request')
 var tools = require("./tools");
 
 console.log("NodeJS scraper");
-
-// Url: http://www.rockingham.wa.gov.au/Services/Town-planning-services/Town-planning-advertising#Submissions
-
-// Fields: , , , , , date_scraped
-// Bonus: date_received, on_notice_from, on_notice_to
-
+// Fields unavaliable: date_received, on_notice_from,
 
 opts = {
   method: "GET",
@@ -33,12 +28,24 @@ ret = request(opts, function (error, response, body) {
       }
       console.log("   address: " + address);
       description = tools.find_between(segment, 'The City has received an application seeking', 'Share your thoughts now');
-      var description = description.replace(/<br \/>|<h4>|<\/p>|\n/g," ").trim();
+      var description = description.replace(/<br \/>|<h4>|<\/p>|<p>|<\/li>|<li>|<\/ul>|<ul>|<\/strong>|<strong>|&nbsp;|\n/g," ").trim().replace(/&#39;/g, "'");
       console.log(" description: '" + description + "'");
       var info_url = "http://www.rockingham.wa.gov.au/getmedia" + tools.find_between(segment, 'a href="/getmedia', 'pdf.aspx') + "pdf.aspx";
       console.log("   info_url: " + info_url);
-      comment_url = "mailto:customer" + tools.find_between(segment, 'mailto:customer', '">email</a></li>');
+      comment_url1 = "mailto:customer" + tools.find_between(segment, 'mailto:customer', '">email</a></li>');
+      comment_url2 = "mailto:customer" + tools.find_between(segment, 'mailto:customer', '">Email</a></li>');
+      if(comment_url1.length < comment_url2.length) {
+        comment_url = comment_url1;
+      } else {
+        comment_url = comment_url2;
+      }
       console.log("   comment_url: " + comment_url);
+      date_scraped = Date.now();
+      console.log("   date_scraped: " + date_scraped);
+      var on_notice_to = Date.parse(tools.find_between(segment, 'in writing to reach the Chief Executive Officer by no later than', '.').replace(/&nbsp;|<strong>|<\/strong>/g," ").trim());
+      console.log("   on_notice_to: " + on_notice_to);
+      tools.write_record_with_values([council_reference, address, description, info_url, comment_url, date_scraped, on_notice_to]);
+
     }
   });
 
