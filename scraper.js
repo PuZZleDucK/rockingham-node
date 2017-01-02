@@ -22,8 +22,19 @@ ret = request(opts, function (error, response, body) {
       console.log(" :: recording: " + class_id);
       var council_reference = "PD_" + tools.find_between(segment, 'PD_', '.pdf')
       console.log("   council_reference: " + council_reference);
-      var address = tools.find_between(segment, " - ", '</a></li>')
+      var address1 = tools.find_between(segment, " - ", '</li>')
+      address1 = tools.find_between(address1, ")", "</a>");
+      var address2 = tools.find_between(segment, " - ", 'h2>')
+      address2 = tools.find_between(address2, ")", "</");
+      if(address1.length < address2.length) {
+        address = address1 + ", WA";
+      } else {
+        address = address2 + ", WA";
+      }
       console.log("   address: " + address);
+      description = tools.find_between(segment, 'The City has received an application seeking', 'Share your thoughts now');
+      var description = description.replace(/<br \/>|<h4>|<\/p>|\n/g," ").trim();
+      console.log(" description: '" + description + "'");
 
     }
   });
