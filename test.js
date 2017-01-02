@@ -89,6 +89,7 @@ Any written submission received in response to this invitation may be placed on 
 </table>
 </div>`
 
+console.log("Complex find_between tests");
 assert(tools.find_between(example_da, "</a>", "</h2>") == "Town Planning Advertising", "real find 1");
 assert(tools.find_between(example_da, '<li><a href="#MandurahRD">', "</a></li>") == "Proposed Fast Food Outlets, Car Museum, Caretaker&#39;s Dwelling, Service Station and Car Wash - Lots 102 and 104 (No.2263 and 2267) Mandurah Road, Karnup", "real find 2");
 
