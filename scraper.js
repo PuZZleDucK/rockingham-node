@@ -35,9 +35,8 @@ ret = request(opts, function (error, response, body) {
       description = tools.find_between(segment, 'The City has received an application seeking', 'Share your thoughts now');
       var description = description.replace(/<br \/>|<h4>|<\/p>|\n/g," ").trim();
       console.log(" description: '" + description + "'");
-      var info_url = tools.find_between(segment, 'a href="/getmedia', 'pdf.aspx');
+      var info_url = "http://www.rockingham.wa.gov.au/getmedia" + tools.find_between(segment, 'a href="/getmedia', 'pdf.aspx') + "pdf.aspx";
       console.log("   info_url: " + info_url);
-
     }
   });
 
