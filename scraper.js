@@ -14,7 +14,15 @@ opts = {
   url: "http://www.rockingham.wa.gov.au/Services/Town-planning-services/Town-planning-advertising#Submissions"
 };
 ret = request(opts, function (error, response, body) {
-  console.log(":: request got: " + body)
-  // search for '<h2><a id="'
-  //   and filter out id == 'Submissions'
+  body.split('<h2>').forEach(function(segment) {
+    var class_id = tools.find_between(segment.replace("\n"," "), '<a id="', '"')
+    if(class_id.match(/ctl00_ctl00_sbSearchBox_btnImageButton|Submissions/)) {
+      // console.log("   :: skipping filler: " + class_id)
+    } else {
+      console.log(" :: recording: " + class_id);
+      console.log("   seg: " + segment.slice(0,50) + "...");
+
+    }
+  });
+
 });
