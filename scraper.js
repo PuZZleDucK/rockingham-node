@@ -5,7 +5,7 @@ console.log("NodeJS scraper");
 
 // Url: http://www.rockingham.wa.gov.au/Services/Town-planning-services/Town-planning-advertising#Submissions
 
-// Fields: council_reference, address, description, info_url, comment_url, date_scraped
+// Fields: , address, description, info_url, comment_url, date_scraped
 // Bonus: date_received, on_notice_from, on_notice_to
 
 
@@ -20,7 +20,8 @@ ret = request(opts, function (error, response, body) {
       // console.log("   :: skipping filler: " + class_id)
     } else {
       console.log(" :: recording: " + class_id);
-      console.log("   seg: " + segment.slice(0,50) + "...");
+      var council_reference = "PD_" + tools.find_between(segment, 'PD_', '.pdf')
+      console.log("   council_reference: " + council_reference);
 
     }
   });
