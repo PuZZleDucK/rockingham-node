@@ -1,5 +1,6 @@
 var sqlite3 = require("sqlite3");
-var request = require('request')
+var request = require('request');
+var encoding = require('encoding');
 var tools = require("./tools");
 
 console.log("NodeJS scraper");
@@ -16,26 +17,26 @@ request(opts, function (error, response, body) {
     if(class_id.match(/ctl00_ctl00_sbSearchBox_btnImageButton|Submissions/)) {
       // console.log("   :: skipping filler: " + class_id)
     } else {
-      var council_reference = "PD_" + tools.find_between(segment, 'PD_', '.pdf')
+      var council_reference = "PD_" + encoding.convert(tools.find_between(segment, 'PD_', '.pdf'), "ascii");
       console.log("Found council_reference: " + council_reference);
       var address1 = tools.find_between(segment, " - ", '</li>')
       address1 = tools.find_between(address1, ")", "</a>");
       var address2 = tools.find_between(segment, " - ", 'h2>')
       address2 = tools.find_between(address2, ")", "</");
       if(address1.length < address2.length) {
-        address = address1 + ", WA";
+        address = encoding.convert(address1, "ascii") + ", WA";
       } else {
-        address = address2 + ", WA";
+        address = encoding.convert(address2, "ascii") + ", WA";
       }
       description = tools.find_between(segment, 'The City has received an application seeking', 'Share your thoughts now');
-      var description = description.replace(/<br \/>|<h4>|<\/p>|<p>|<\/li>|<li>|<\/ul>|<ul>|<\/strong>|<strong>|&nbsp;|\n/g," ").trim().replace(/&#39;/g, "'");
+      var description = encoding.convert(description.replace(/<br \/>|<h4>|<\/p>|<p>|<\/li>|<li>|<\/ul>|<ul>|<\/strong>|<strong>|&nbsp;|\n/g," ").trim().replace(/&#39;/g, "'"), "ascii");
       var info_url = "http://www.rockingham.wa.gov.au/getmedia" + tools.find_between(segment, 'a href="/getmedia', 'pdf.aspx') + "pdf.aspx";
       comment_url1 = "mailto:customer" + tools.find_between(segment, 'mailto:customer', '">email</a></li>');
       comment_url2 = "mailto:customer" + tools.find_between(segment, 'mailto:customer', '">Email</a></li>');
       if(comment_url1.length < comment_url2.length) {
-        comment_url = comment_url1;
+        comment_url = encoding.convert(comment_url1, "ascii");
       } else {
-        comment_url = comment_url2;
+        comment_url = encoding.convert(comment_url2, "ascii");
       }
       date_scraped = Date.now();
       var on_notice_to = Date.parse(tools.find_between(segment, 'in writing to reach the Chief Executive Officer by no later than', '.').replace(/&nbsp;|<strong>|<\/strong>/g," ").trim());
